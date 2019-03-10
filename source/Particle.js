@@ -1,18 +1,24 @@
 class Particle {
-	constructor(x, y, dna) {
+	constructor(x, y, dna, parents = '') {
+		this.id = counter.particle;
+		this.parents = parents + (parents ? '-' : '') + this.id;
+
 		this.position = new p5.Vector(x, y);
 		this.velocity = new p5.Vector(0, 0);
 		this.acceleration = new p5.Vector(0, 0);
 
 		this.color = color(colors.particle);
-		this.radius = 5;
+		this.radius = 4;
 		this.age = 0;
 		this.generation = 0;
 		this.health = 100;
 		this.healthLoss = 0.1;
+		this.points = 0;
 
 		if (dna) this.dna = dna;
 		else this.dna = new DNA();
+
+		counter.particle += 1;
 	}
 
 	show() {
@@ -39,7 +45,6 @@ class Particle {
 
 		this.direction = p5.Vector.sub(target.position, this.position);
 		this.direction.setMag(this.dna.maxSpeed);
-
 		this.force = p5.Vector.sub(this.direction, this.velocity);
 		this.force.limit(this.dna.maxForce);
 
@@ -56,13 +61,43 @@ class Particle {
 		force.mult(this.dna.forces[target.force]);
 	}
 
+	aging() {
+		if (this.age % 1000 == 0) {
+			this.healthLoss += rates.aging;
+		}
+	}
+
+	reproduction(list) {
+		if (list.length < pTotal) {
+			const checkAge = this.age % cloneInterval == 0;
+			const checkPoints = this.points >= clonePoints;
+
+			if (checkAge && checkPoints) {
+				list.push(this.clone());
+				this.points = 0;
+			}
+		}
+	}
+
+	death(list, index) {
+		if (this.health < 1) {
+			list.splice(index, 1);
+		}
+	}
+
 	update(list, index) {
 		this.health -= this.healthLoss;
 		this.age += 1;
 
-		if (this.health < 1) {
-			list.splice(index, 1);
-		}
+		this.aging();
+		this.reproduction(list);
+		this.death(list, index);
+	}
+
+	clone() {
+		const { x, y } = this.position;
+		const dna = this.dna.clone();
+		return new Particle(x, y, dna, this.parents);
 	}
 
 	seek(list) {
@@ -105,11 +140,12 @@ class Particle {
 
 	eat(list, target, distance, index) {
 		if (distance < 5) {
-			list.splice(index, 1);
-
 			if (this.health < this.dna.maxHealth) {
 				this.health += target.value;
+				this.points += 1;
 			}
+
+			list.splice(index, 1);
 		}
 	}
 

@@ -10,9 +10,42 @@ class DNA {
 		};
 	}
 
+	mutateForce() {
+		const rate = rates.force;
+		this.forces.good += random(-rate, rate);
+		this.forces.bad += random(-rate, rate);
+
+		for (let force in this.forces) {
+			if (this.forces[force] > limits.force) {
+				this.forces[force] = limits.force;
+			}
+		}
+	}
+
+	mutateStats() {
+		const msRate = rates.maxSpeed;
+		const mfRate = rates.maxForce;
+		const stats = ['maxSpeed', 'maxForce'];
+		this.maxSpeed += random(-msRate, msRate);
+		this.maxForce += random(-mfRate, mfRate);
+
+		stats.forEach(stat => {
+			if (this[stat] > limits[stat]) {
+				this[stat] = limits[stat];
+			}
+		});
+	}
+
 	clone() {
-		const prototype = Object.create(Object.getPrototypeOf(this));
-		const clone = Object.assign(prototype, this);
+		const clone = this.cloneObject(this);
+		clone.forces = this.cloneObject(this.forces);
+		clone.mutateForce();
+		clone.mutateStats();
 		return clone;
+	}
+
+	cloneObject(object) {
+		const prototype = Object.create(Object.getPrototypeOf(object));
+		return Object.assign(prototype, object);
 	}
 }
