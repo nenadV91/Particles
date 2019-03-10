@@ -1,14 +1,18 @@
 class Particle {
-	constructor(x, y) {
+	constructor(x, y, dna) {
 		this.position = new p5.Vector(x, y);
 		this.velocity = new p5.Vector(0, 0);
 		this.acceleration = new p5.Vector(0, 0);
 
-		this.color = colors.particle;
+		this.color = color(colors.particle);
 		this.radius = 5;
+		this.age = 0;
+		this.generation = 0;
+		this.health = 100;
+		this.healthLoss = 0.1;
 
-		this.maxSpeed = 3;
-		this.maxForce = 0.4;
+		if (dna) this.dna = dna;
+		else this.dna = new DNA();
 	}
 
 	show() {
@@ -17,12 +21,13 @@ class Particle {
 
 	showBody() {
 		const angle = this.velocity.heading() + PI / 2;
-		Layout.particle(this.position, this.radius, this.color, angle);
+		const alpha = map(this.health, 0, this.dna.maxHealth, 20, 255);
+		Graphic.particle(this.position, this.radius, this.color, alpha, angle);
 	}
 
 	move() {
 		this.velocity.add(this.acceleration);
-		this.velocity.limit(this.maxSpeed);
+		this.velocity.limit(this.dna.maxSpeed);
 		this.position.add(this.velocity);
 		this.acceleration.mult(0);
 	}
@@ -32,29 +37,44 @@ class Particle {
 			return false;
 		}
 
-		this.direction = p5.Vector.sub(target, this.position);
-		this.direction.setMag(this.maxSpeed);
+		this.direction = p5.Vector.sub(target.position, this.position);
+		this.direction.setMag(this.dna.maxSpeed);
 
 		this.force = p5.Vector.sub(this.direction, this.velocity);
-		this.force.limit(this.maxForce);
+		this.force.limit(this.dna.maxForce);
 
-		this.applyForce(this.force);
+		this.applyForce(this.force, target);
+		this.accelerate(this.force);
 		this.move();
 	}
 
-	applyForce(force) {
+	accelerate(force) {
 		this.acceleration.add(force);
 	}
 
-	static create() {
-		const x = random(width);
-		const y = random(height);
-		return new Particle(x, y);
+	applyForce(force, target) {
+		force.mult(this.dna.forces[target.force]);
 	}
 
-	static createAll(list, total) {
-		for (let i = 0; i < total; i++) {
-			list.push(Particle.create());
+	update(list, index) {
+		this.health -= this.healthLoss;
+		this.age += 1;
+
+		if (this.health < 1) {
+			list.splice(index, 1);
+		}
+	}
+
+	seek(list) {
+		const selected = this.select(list);
+
+		if (!selected) {
+			return this.move();
+		} else {
+			const { target, distance, index } = selected;
+			this.target = target;
+			this.moveTo(this.target);
+			this.eat(list, this.target, distance, index);
 		}
 	}
 
@@ -83,30 +103,25 @@ class Particle {
 		};
 	}
 
-	seek(list) {
-		const { target, distance, index } = this.select(list);
-		this.target = target;
+	eat(list, target, distance, index) {
+		if (distance < 5) {
+			list.splice(index, 1);
 
-		if (this.target) {
-			this.moveTo(this.target.position);
+			if (this.health < this.dna.maxHealth) {
+				this.health += target.value;
+			}
 		}
 	}
-}
 
-class Layout {
-	static particle(position, radius, color, angle) {
-		noStroke();
-		fill(color);
-		strokeWeight(1);
+	static create() {
+		const x = random(width);
+		const y = random(height);
+		return new Particle(x, y);
+	}
 
-		push();
-		translate(position.x, position.y);
-		rotate(angle);
-		beginShape();
-		vertex(0, -radius * 1.5);
-		vertex(-radius, radius * 1.5);
-		vertex(radius, radius * 1.5);
-		endShape(CLOSE);
-		pop();
+	static createAll(list, total) {
+		for (let i = 0; i < total; i++) {
+			list.push(Particle.create());
+		}
 	}
 }

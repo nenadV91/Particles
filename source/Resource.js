@@ -1,17 +1,15 @@
 class Resource {
-	constructor(x, y, { value, type, color } = {}) {
+	constructor(x, y, { value, type, color, force } = {}) {
 		this.position = new p5.Vector(x, y);
 		this.radius = 5;
 		this.value = value;
 		this.type = type;
 		this.color = color;
+		this.force = force;
 	}
 
 	show() {
-		const { x, y } = this.position;
-		noStroke();
-		fill(this.color);
-		ellipse(x, y, this.radius, this.radius);
+		Graphic.resource(this.position, this.radius, this.color);
 	}
 
 	static create(resource) {
@@ -43,6 +41,7 @@ class Food extends Resource {
 		this.value = 10;
 		this.color = colors.food;
 		this.type = 'food';
+		this.force = 'good';
 	}
 }
 
@@ -52,5 +51,6 @@ class Poison extends Resource {
 		this.value = -25;
 		this.color = colors.poison;
 		this.type = 'poison';
+		this.force = 'bad';
 	}
 }
