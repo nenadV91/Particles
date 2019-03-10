@@ -38,7 +38,9 @@ function draw() {
 	for (let i = 0; i < particles.length; i++) {
 		const particle = particles[i];
 		particle.show();
-		particle.moveTo(new p5.Vector(mouseX, mouseY));
+
+		particle.seek(food);
+		particle.seek(poison);
 	}
 
 	Resource.show(food);

@@ -16,22 +16,8 @@ class Particle {
 	}
 
 	showBody() {
-		const { x, y } = this.position;
-		const theta = this.velocity.heading() + PI / 2;
-
-		noStroke();
-		fill(this.color);
-		strokeWeight(1);
-
-		push();
-		translate(x, y);
-		rotate(theta);
-		beginShape();
-		vertex(0, -this.radius * 1.5);
-		vertex(-this.radius, this.radius * 1.5);
-		vertex(this.radius, this.radius * 1.5);
-		endShape(CLOSE);
-		pop();
+		const angle = this.velocity.heading() + PI / 2;
+		Layout.particle(this.position, this.radius, this.color, angle);
 	}
 
 	move() {
@@ -72,7 +58,55 @@ class Particle {
 		}
 	}
 
-	static showAll(list) {
-		list.forEach(item => item.show());
+	select(list) {
+		let target, index, distance;
+
+		for (let i = 0; i < list.length; i++) {
+			const resource = list[i];
+			const dist = resource.position.dist(this.position);
+
+			if (!target || distance > dist) {
+				target = resource;
+				distance = dist;
+				index = i;
+			}
+		}
+
+		if (!target) {
+			return null;
+		}
+
+		return {
+			target,
+			distance,
+			index
+		};
+	}
+
+	seek(list) {
+		const { target, distance, index } = this.select(list);
+		this.target = target;
+
+		if (this.target) {
+			this.moveTo(this.target.position);
+		}
+	}
+}
+
+class Layout {
+	static particle(position, radius, color, angle) {
+		noStroke();
+		fill(color);
+		strokeWeight(1);
+
+		push();
+		translate(position.x, position.y);
+		rotate(angle);
+		beginShape();
+		vertex(0, -radius * 1.5);
+		vertex(-radius, radius * 1.5);
+		vertex(radius, radius * 1.5);
+		endShape(CLOSE);
+		pop();
 	}
 }
