@@ -26,7 +26,7 @@ class Graphic {
 		const maxHealth = particle.dna.maxHealth.toFixed(0);
 		const healthLoss = particle.healthLoss.toFixed(2);
 
-		let x = 30;
+		let xbase = 30;
 		let ybase = 12;
 
 		const addStat = (label, value) => {
@@ -35,7 +35,7 @@ class Graphic {
 				noStroke();
 				fill(textColor);
 				textSize(10);
-				text(`${label}: ${value}`, x, ybase * i);
+				text(`${label}: ${value}`, xbase, ybase * i);
 			};
 
 			stat.type = 'text';
@@ -43,11 +43,9 @@ class Graphic {
 		};
 
 		const addLine = (value, maxValue, lineColor) => {
-			const x = 30;
 			const min = 0;
 			const max = 75;
 			const bg = color(255, 255, 255, 100);
-
 			const len = map(value, 0, maxValue, min, max);
 			const stat = { value, len };
 
@@ -57,11 +55,11 @@ class Graphic {
 				// bg line
 				noFill();
 				stroke(bg);
-				line(x, y, x + max, y);
+				line(xbase, y, xbase + max, y);
 
 				// main line
 				stroke(lineColor);
-				line(x, y, x + len, y);
+				line(xbase, y, xbase + len, y);
 			};
 
 			stat.type = 'line';
