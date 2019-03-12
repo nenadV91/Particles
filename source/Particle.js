@@ -28,7 +28,7 @@ class Particle {
 	showBody() {
 		const angle = this.velocity.heading() + PI / 2;
 		const alpha = map(this.health, 0, this.dna.maxHealth, 20, 255);
-		Graphic.particle(this.position, this.radius, this.color, alpha, angle);
+		Graphic.particle(this, alpha, angle);
 	}
 
 	move() {
@@ -95,9 +95,15 @@ class Particle {
 	}
 
 	clone() {
-		const { x, y } = this.position;
+		const {
+			position: { x, y },
+			parents,
+			generation
+		} = this;
 		const dna = this.dna.clone();
-		return new Particle(x, y, dna, this.parents);
+		const clone = new Particle(x, y, dna, parents);
+		clone.generation = generation + 1;
+		return clone;
 	}
 
 	seek(list) {
@@ -140,11 +146,12 @@ class Particle {
 
 	eat(list, target, distance, index) {
 		if (distance < 5) {
-			if (this.health < this.dna.maxHealth) {
-				this.health += target.value;
-				this.points += 1;
+			const newHealth = this.health + target.value;
+			if (newHealth <= this.dna.maxHealth) {
+				this.health = newHealth;
 			}
 
+			this.points += 1;
 			list.splice(index, 1);
 		}
 	}

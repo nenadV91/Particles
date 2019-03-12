@@ -66,12 +66,3 @@ function draw() {
 	Resource.show(food);
 	Resource.show(poison);
 }
-
-function dna(stat) {
-	return particles
-		.map(({ dna }) => {
-			return dna[stat];
-		})
-		.sort()
-		.reverse();
-}
