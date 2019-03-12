@@ -27,25 +27,53 @@ class Graphic {
 		const healthLoss = particle.healthLoss.toFixed(2);
 
 		let x = 30;
-		let y = 12;
+		let ybase = 12;
 
 		const addStat = (label, value) => {
 			const stat = { label, value };
 			stat.show = i => {
+				noStroke();
 				fill(textColor);
 				textSize(10);
-				text(`${label}: ${value}`, x, y * i);
+				text(`${label}: ${value}`, x, ybase * i);
 			};
+
+			stat.type = 'text';
 			stats.push(stat);
 		};
 
-		const addGraph = label => {};
+		const addLine = (value, maxValue, lineColor) => {
+			const x = 30;
+			const min = 0;
+			const max = 75;
+			const bg = color(255, 255, 255, 100);
+
+			const len = map(value, 0, maxValue, min, max);
+			const stat = { value, len };
+
+			stat.show = i => {
+				const y = ybase * i - ybase / 2;
+
+				// bg line
+				noFill();
+				stroke(bg);
+				line(x, y, x + max, y);
+
+				// main line
+				stroke(lineColor);
+				line(x, y, x + len, y);
+			};
+
+			stat.type = 'line';
+			stats.push(stat);
+		};
 
 		addStat('Id', particle.id);
 		addStat('Age', particle.age);
-		addStat('Health', `${health}  /  ${maxHealth}`);
-		addStat('Health loss', healthLoss);
 		addStat('Generation', particle.generation);
+		addStat('Health loss', healthLoss);
+		addStat('Health', `${health}  /  ${maxHealth}`);
+		addLine(health, maxHealth, color(0, 255, 0, 200));
 
 		for (let i = 0; i < stats.length; i++) {
 			const stat = stats[i];

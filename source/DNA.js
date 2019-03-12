@@ -1,6 +1,6 @@
 class DNA {
 	constructor() {
-		this.maxSpeed = random(0.5, 2.5);
+		this.maxSpeed = random(0.5, 1.5);
 		this.maxForce = random(0.1, 0.6);
 		this.maxHealth = random(100, 300);
 
