@@ -4,7 +4,6 @@ body {
   padding: 0;
 }
 
-#bg,
 canvas {
   position: fixed;
   width: 100vw;
@@ -19,33 +18,3 @@ canvas {
   vertical-align: top;
   z-index: 10;
 }
-
-/* #bg {
-  left: -10%;
-  top: -10%;
-  height: 120%;
-  width: 120%;
-}
-
-.background {
-  background-size: cover;
-  background-position: center;
-  position: absolute;
-  z-index: 1;
-  width: 100%;
-  height: 100%;
-  top: 0;
-  left: 0;
-  bottom: 0;
-}
-
-#background-1 {
-  background-image: url('background-1.jpg');
-  z-index: 1;
-}
-
-#background-2 {
-  background-image: url('background-2.png');
-  opacity: 0.6;
-  z-index: 2;
-} */

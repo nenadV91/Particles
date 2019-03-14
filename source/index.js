@@ -15,10 +15,10 @@ const fInterval = 50;
 const pInterval = 200;
 
 const colors = {
-	particle: 'rgba(255, 255, 255, 1)',
+	particle: 'rgb(255, 255, 255)',
 	background: 'rgba(0, 0, 0, 1)',
-	food: 'rgb(108, 203, 221)',
-	poison: 'rgb(238, 74, 91)'
+	food: 'rgb(81, 173, 172)',
+	poison: 'rgb(246, 114, 127)'
 };
 
 const rates = {
@@ -69,14 +69,4 @@ function draw() {
 
 	Resource.show(food);
 	Resource.show(poison);
-}
-
-function parallax() {
-	// var scene = document.getElementById('bg');
-	// if (document.body.contains(scene)) {
-	// 	var parallaxInstance = new Parallax(scene, {
-	// 		frictionX: 0.15,
-	// 		frictionY: 0.15
-	// 	});
-	// }
 }
