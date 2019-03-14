@@ -4,7 +4,10 @@ class Graphic {
 
 		push();
 		translate(position.x, position.y);
-		Graphic.particleStats(particle);
+
+		if (display.particleStats) {
+			Graphic.particleStats(particle);
+		}
 
 		color.setAlpha(alpha);
 		noStroke();
