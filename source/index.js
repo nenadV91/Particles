@@ -1,73 +1,44 @@
+import p5 from 'p5';
+import * as globals from 'globals';
+import Particle from 'app/Particle';
+import Resource, { Food, Poison } from 'app/Resource';
+
 // Globals
-let canvas;
-let width;
-let height;
+export const particles = [];
+export const food = [];
+export const poison = [];
 
-const particles = [];
-const pInitial = 20;
-const pTotal = 50;
-const cloneInterval = 500;
-const clonePoints = 35;
+const app = p5 => {
+	p5.Vector = p5.constructor.Vector;
+	global.width = p5.windowWidth;
+	global.height = p5.windowHeight;
+	global.globals = globals;
+	global.p5 = p5;
 
-const food = [];
-const poison = [];
-const fInterval = 50;
-const pInterval = 200;
+	p5.setup = () => {
+		global.canvas = p5.createCanvas(width, height);
+		Particle.createAll(particles, globals.limits.particles.initial);
+		Resource.createAll(food, 35, Food);
+		Resource.createAll(poison, 15, Poison);
+		Resource.maintain(food, 65, Food, globals.intervals.resource);
+		Resource.maintain(poison, 25, Poison, globals.intervals.particle);
+	};
 
-const colors = {
-	particle: 'rgb(255, 255, 255)',
-	background: 'rgba(0, 0, 0, 1)',
-	food: 'rgb(81, 173, 172)',
-	poison: 'rgb(246, 114, 127)'
+	p5.draw = () => {
+		globals.counter.time++;
+		p5.background(globals.colors.background);
+
+		for (let i = 0; i < particles.length; i++) {
+			const particle = particles[i];
+			particle.show();
+			particle.seek(food);
+			particle.seek(poison);
+			particle.update(particles, i);
+		}
+
+		Resource.show(food);
+		Resource.show(poison);
+	};
 };
 
-const rates = {
-	force: 0.35,
-	maxForce: 0.025,
-	maxSpeed: 0.1,
-	aging: 0.1
-};
-
-const limits = {
-	force: 3,
-	maxForce: 0.8,
-	maxSpeed: 2.5
-};
-
-const counter = {
-	particle: 0
-};
-
-const display = {
-	particleStats: true,
-	particleForces: false
-};
-
-function setup() {
-	width = windowWidth;
-	height = windowHeight;
-	canvas = createCanvas(width, height);
-
-	Particle.createAll(particles, pInitial);
-
-	Resource.createAll(food, 35, Food);
-	Resource.createAll(poison, 15, Poison);
-	Resource.maintain(food, 65, Food, fInterval);
-	Resource.maintain(poison, 25, Poison, pInterval);
-}
-
-function draw() {
-	background(colors.background);
-
-	for (let i = 0; i < particles.length; i++) {
-		const particle = particles[i];
-		particle.show();
-
-		particle.seek(food);
-		particle.seek(poison);
-		particle.update(particles, i);
-	}
-
-	Resource.show(food);
-	Resource.show(poison);
-}
+const P5 = new p5(app);

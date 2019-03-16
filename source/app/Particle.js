@@ -1,13 +1,16 @@
+import DNA from 'app/DNA';
+import Graphic from 'app/Graphic';
+
 class Particle {
 	constructor(x, y, dna, parents = '') {
-		this.id = counter.particle;
+		this.id = globals.counter.particle;
 		this.parents = parents + (parents ? '-' : '') + this.id;
 
 		this.position = new p5.Vector(x, y);
 		this.velocity = new p5.Vector(0, 0);
 		this.acceleration = new p5.Vector(0, 0);
 
-		this.color = color(colors.particle);
+		this.color = p5.color(globals.colors.particle);
 		this.radius = 4;
 		this.age = 0;
 		this.generation = 0;
@@ -18,11 +21,11 @@ class Particle {
 		if (dna) this.dna = dna;
 		else this.dna = new DNA();
 
-		counter.particle += 1;
+		globals.counter.particle += 1;
 
 		const { forces } = this.dna;
-		const good = map(forces.good, 0, limits.force, 5, 150);
-		const bad = map(forces.bad, 0, limits.force, 5, 150);
+		const good = p5.map(forces.good, 0, globals.limits.force, 5, 150);
+		const bad = p5.map(forces.bad, 0, globals.limits.force, 5, 150);
 
 		this.ui = {
 			forces: { good, bad }
@@ -34,8 +37,8 @@ class Particle {
 	}
 
 	showBody() {
-		const angle = this.velocity.heading() + PI / 2;
-		const alpha = map(this.health, 0, this.dna.maxHealth, 20, 255);
+		const angle = this.velocity.heading() + p5.PI / 2;
+		const alpha = p5.map(this.health, 0, this.dna.maxHealth, 20, 255);
 		Graphic.particle(this, alpha, angle);
 	}
 
@@ -71,14 +74,14 @@ class Particle {
 
 	aging() {
 		if (this.age % 1000 == 0) {
-			this.healthLoss += rates.aging;
+			this.healthLoss += globals.rates.aging;
 		}
 	}
 
 	reproduction(list) {
-		if (list.length < pTotal) {
-			const checkAge = this.age % cloneInterval == 0;
-			const checkPoints = this.points >= clonePoints;
+		if (list.length < globals.limits.particles.total) {
+			const checkAge = this.age % globals.options.clone.interval == 0;
+			const checkPoints = this.points >= globals.options.clone.points;
 
 			if (checkAge && checkPoints) {
 				list.push(this.clone());
@@ -165,8 +168,8 @@ class Particle {
 	}
 
 	static create() {
-		const x = random(width);
-		const y = random(height);
+		const x = p5.random(width);
+		const y = p5.random(height);
 		return new Particle(x, y);
 	}
 
@@ -176,3 +179,5 @@ class Particle {
 		}
 	}
 }
+
+export default Particle;

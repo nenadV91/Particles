@@ -1,3 +1,5 @@
+import Graphic from 'app/Graphic';
+
 class Resource {
 	constructor(x, y, { value, type, color, force } = {}) {
 		this.position = new p5.Vector(x, y);
@@ -13,8 +15,8 @@ class Resource {
 	}
 
 	static create(resource) {
-		const x = random(width);
-		const y = random(height);
+		const x = p5.random(width);
+		const y = p5.random(height);
 		return new resource(x, y);
 	}
 
@@ -35,22 +37,24 @@ class Resource {
 	}
 }
 
-class Food extends Resource {
+export class Food extends Resource {
 	constructor(...props) {
 		super(...props);
 		this.value = 10;
-		this.color = colors.food;
+		this.color = globals.colors.food;
 		this.type = 'food';
 		this.force = 'good';
 	}
 }
 
-class Poison extends Resource {
+export class Poison extends Resource {
 	constructor(...props) {
 		super(...props);
 		this.value = -25;
-		this.color = colors.poison;
+		this.color = globals.colors.poison;
 		this.type = 'poison';
 		this.force = 'bad';
 	}
 }
+
+export default Resource;
