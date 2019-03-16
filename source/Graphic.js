@@ -1,25 +1,45 @@
 class Graphic {
 	static particle(particle, alpha, angle) {
-		const { color, position, radius } = particle;
+		const { position, radius } = particle;
+		const col = particle.color;
+
+		if (display.particleForces) {
+			Graphic.particleForce(particle, 'good', color(0, 255, 0));
+			Graphic.particleForce(particle, 'bad', color(255, 0, 0));
+		}
 
 		push();
-		translate(position.x, position.y);
+		translate(position.x, position.y - 25);
 
 		if (display.particleStats) {
 			Graphic.particleStats(particle);
 		}
 
-		color.setAlpha(alpha);
-		noStroke();
-		fill(color);
-		strokeWeight(1);
+		translate(0, 25);
 		rotate(angle);
+
+		col.setAlpha(alpha);
+		noStroke();
+		fill(col);
+		strokeWeight(1);
 		beginShape();
 		vertex(0, -radius * 1.5);
 		vertex(-radius, radius * 1.5);
 		vertex(radius, radius * 1.5);
 		endShape(CLOSE);
 		pop();
+	}
+
+	static particleForce(particle, force, color) {
+		const {
+			position: { x, y },
+			ui: { forces }
+		} = particle;
+
+		noFill();
+		color.setAlpha(100);
+		stroke(color);
+		ellipse(x, y, forces[force], forces[force]);
 	}
 
 	static particleStats(particle) {
@@ -29,7 +49,7 @@ class Graphic {
 		const maxHealth = particle.dna.maxHealth.toFixed(0);
 		const healthLoss = particle.healthLoss.toFixed(2);
 
-		let xbase = 30;
+		let xbase = display.particleForces ? 50 : 30;
 		let ybase = 12;
 
 		const addStat = (label, value) => {

@@ -19,6 +19,14 @@ class Particle {
 		else this.dna = new DNA();
 
 		counter.particle += 1;
+
+		const { forces } = this.dna;
+		const good = map(forces.good, 0, limits.force, 5, 150);
+		const bad = map(forces.bad, 0, limits.force, 5, 150);
+
+		this.ui = {
+			forces: { good, bad }
+		};
 	}
 
 	show() {

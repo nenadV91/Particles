@@ -31,7 +31,7 @@ const rates = {
 const limits = {
 	force: 3,
 	maxForce: 0.8,
-	maxSpeed: 3
+	maxSpeed: 2.5
 };
 
 const counter = {
@@ -39,7 +39,8 @@ const counter = {
 };
 
 const display = {
-	particleStats: true
+	particleStats: true,
+	particleForces: false
 };
 
 function setup() {
