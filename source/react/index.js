@@ -5,10 +5,19 @@ import Button from 'components/Button';
 import EyeIcon from 'icons/eye';
 import ForceIcon from 'icons/force';
 import StatsIcon from 'icons/bars';
+import p5 from 'p5';
 
 class App extends React.Component {
 	state = {
+		particles: [],
 		statsWidget: true
+	};
+
+	componentDidMount = () => {
+		const { particles, app } = this.props;
+		this.setState({ particles });
+		this.update = setInterval(() => this.setState({ particles }));
+		const P5 = new p5(app, document.querySelector('#canvas'));
 	};
 
 	toggleStats = () => {
@@ -54,6 +63,8 @@ class App extends React.Component {
 						<GeneralStats particles={particles} globals={globals} />
 					</WidgetBody>
 				</Widget>
+
+				<div id='canvas' />
 			</div>
 		);
 	};

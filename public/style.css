@@ -9,7 +9,7 @@ body {
 	font-size: 12px;
 }
 
-#root,
+#app,
 canvas {
 	position: fixed;
 	width: 100vw;
@@ -22,11 +22,7 @@ canvas {
 
 canvas {
 	vertical-align: top;
-	z-index: 1;
-}
-
-#root {
-	z-index: 2;
+	z-index: 5;
 }
 
 .app-content {
@@ -37,6 +33,8 @@ canvas {
 }
 
 .widget {
+	position: relative;
+	z-index: 10;
 	color: rgb(158, 165, 174);
 	border-radius: 5px;
 	overflow: hidden;
