@@ -1,13 +1,14 @@
 import React from 'react';
 import Draggable from 'react-draggable';
 
-const Widget = props => {
+const Widget = ({ visible = true, defaultPosition, children }) => {
+	if (!visible) {
+		return null;
+	}
+
 	return (
-		<Draggable
-			defaultPosition={props.defaultPosition}
-			bounds='.app-content'
-			handle='.widget-header'>
-			<div className='widget'>{props.children}</div>
+		<Draggable defaultPosition={defaultPosition} bounds='.app-content' handle='.widget-header'>
+			<div className='widget'>{children}</div>
 		</Draggable>
 	);
 };

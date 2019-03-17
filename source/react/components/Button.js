@@ -8,7 +8,9 @@ export default class Button extends Component {
 
 	handleClick = () => {
 		this.props.handleClick();
-		this.setState(({ active }) => ({ active: !active }));
+		if (this.props.active === undefined) {
+			this.setState(({ active }) => ({ active: !active }));
+		}
 	};
 
 	render() {
@@ -16,7 +18,7 @@ export default class Button extends Component {
 		const className = classnames({
 			btn: true,
 			'btn-control': true,
-			active: this.state.active
+			active: this.props.active || this.state.active
 		});
 
 		return (

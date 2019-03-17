@@ -1,43 +1,62 @@
 import React from 'react';
 import GeneralStats from './widgets/GeneralStats';
 import Widget, { WidgetHeader, WidgetBody } from 'components/Widget';
+import Button from 'components/Button';
 import EyeIcon from 'icons/eye';
 import ForceIcon from 'icons/force';
-import Button from 'components/Button';
+import StatsIcon from 'icons/bars';
 
-export default props => {
-	const { globals, particles } = props;
-	const { display } = globals;
+class App extends React.Component {
+	state = {
+		statsWidget: true
+	};
 
-	const toggleStats = () => {
+	toggleStats = () => {
+		const { display } = this.props.globals;
 		display.particleStats = !display.particleStats;
 	};
 
-	const toggleForces = () => {
+	toggleForces = () => {
+		const { display } = this.props.globals;
 		display.particleForces = !display.particleForces;
 	};
 
-	return (
-		<div className='app-content'>
-			<Widget defaultPosition={{ x: 25, y: 30 }}>
-				<WidgetHeader>Controls</WidgetHeader>
-				<WidgetBody>
-					<Button handleClick={toggleStats}>
-						<EyeIcon />
-					</Button>
+	toggleStatsWidget = () => {
+		this.setState(({ statsWidget }) => ({ statsWidget: !statsWidget }));
+	};
 
-					<Button handleClick={toggleForces}>
-						<ForceIcon />
-					</Button>
-				</WidgetBody>
-			</Widget>
+	render = () => {
+		const { globals, particles } = this.props;
+		const { statsWidget } = this.state;
 
-			<Widget defaultPosition={{ x: 25, y: 30 }}>
-				<WidgetHeader>General stats</WidgetHeader>
-				<WidgetBody>
-					<GeneralStats particles={particles} globals={globals} />
-				</WidgetBody>
-			</Widget>
-		</div>
-	);
-};
+		return (
+			<div className='app-content'>
+				<Widget defaultPosition={{ x: 25, y: 30 }}>
+					<WidgetHeader>Controls</WidgetHeader>
+					<WidgetBody>
+						<Button handleClick={this.toggleStats}>
+							<EyeIcon />
+						</Button>
+
+						<Button handleClick={this.toggleForces}>
+							<ForceIcon />
+						</Button>
+
+						<Button active={statsWidget} handleClick={this.toggleStatsWidget}>
+							<StatsIcon />
+						</Button>
+					</WidgetBody>
+				</Widget>
+
+				<Widget visible={statsWidget} defaultPosition={{ x: 25, y: 30 }}>
+					<WidgetHeader>General stats</WidgetHeader>
+					<WidgetBody>
+						<GeneralStats particles={particles} globals={globals} />
+					</WidgetBody>
+				</Widget>
+			</div>
+		);
+	};
+}
+
+export default App;

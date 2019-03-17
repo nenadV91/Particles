@@ -124,6 +124,7 @@ button:focus {
 	transition: all 0.2s ease-in;
 	cursor: pointer;
 	width: 25px;
+	height: 20px;
 	opacity: 0.5;
 }
 
