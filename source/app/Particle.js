@@ -27,6 +27,7 @@ class Particle {
 		const good = p5.map(forces.good, 0, globals.limits.force, 5, 150);
 		const bad = p5.map(forces.bad, 0, globals.limits.force, 5, 150);
 
+		this.showStats = false;
 		this.ui = {
 			forces: { good, bad }
 		};

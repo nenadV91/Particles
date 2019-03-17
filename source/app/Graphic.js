@@ -11,7 +11,7 @@ class Graphic {
 		p5.push();
 		p5.translate(position.x, position.y - 25);
 
-		if (globals.display.particleStats) {
+		if (globals.display.particleStats || particle.showStats) {
 			Graphic.particleStats(particle);
 		}
 
@@ -49,7 +49,7 @@ class Graphic {
 		const maxHealth = particle.dna.maxHealth.toFixed(0);
 		const healthLoss = particle.healthLoss.toFixed(2);
 
-		let xbase = globals.display.particleForces ? 50 : 30;
+		let xbase = globals.display.particleForces ? 55 : 30;
 		let ybase = 12;
 
 		const addStat = (label, value) => {

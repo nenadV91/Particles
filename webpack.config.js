@@ -19,7 +19,9 @@ module.exports = {
 	resolve: {
 		alias: {
 			globals: path.resolve(__dirname, 'source', 'globals'),
-			app: path.resolve(__dirname, 'source', 'app')
+			app: path.resolve(__dirname, 'source', 'app'),
+			icons: path.resolve(__dirname, 'source', 'react', 'icons'),
+			components: path.resolve(__dirname, 'source', 'react', 'components')
 		}
 	}
 };

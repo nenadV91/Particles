@@ -1,8 +1,8 @@
 export const colors = {
 	particle: 'rgb(255, 255, 255)',
 	background: 'rgba(0, 0, 0, 1)',
-	food: 'rgb(81, 173, 172)',
-	poison: 'rgb(246, 114, 127)'
+	food: 'rgba(49, 40, 228, 0.8)',
+	poison: 'rgba(197, 45, 40, 0.6)'
 };
 
 export const rates = {
@@ -28,7 +28,7 @@ export const counter = {
 };
 
 export const display = {
-	particleStats: true,
+	particleStats: false,
 	particleForces: false
 };
 

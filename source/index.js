@@ -2,6 +2,9 @@ import p5 from 'p5';
 import * as globals from 'globals';
 import Particle from 'app/Particle';
 import Resource, { Food, Poison } from 'app/Resource';
+import React from 'react';
+import ReactDOM from 'react-dom';
+import Widgets from './react';
 
 // Globals
 export const particles = [];
@@ -22,6 +25,26 @@ const app = p5 => {
 		Resource.createAll(poison, 15, Poison);
 		Resource.maintain(food, 65, Food, globals.intervals.resource);
 		Resource.maintain(poison, 25, Poison, globals.intervals.particle);
+
+		class App extends React.Component {
+			state = {
+				particles: [],
+				poison: [],
+				food: []
+			};
+
+			componentDidMount = () => {
+				this.setState({ particles });
+				this.update = setInterval(() => this.setState({ particles }));
+			};
+
+			render = () => {
+				return <Widgets globals={global.globals} particles={this.state.particles} />;
+			};
+		}
+
+		// react
+		ReactDOM.render(<App />, document.querySelector('#root'));
 	};
 
 	p5.draw = () => {
