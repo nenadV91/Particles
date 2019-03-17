@@ -40,7 +40,10 @@ class Resource {
 export class Food extends Resource {
 	constructor(...props) {
 		super(...props);
-		this.value = 10;
+		this.min = 5;
+		this.max = 15;
+		this.value = p5.floor(p5.random(this.min, this.max));
+		this.radius = p5.map(this.value, this.min, this.max, 2, 6);
 		this.color = globals.colors.food;
 		this.type = 'food';
 		this.force = 'good';
@@ -50,7 +53,10 @@ export class Food extends Resource {
 export class Poison extends Resource {
 	constructor(...props) {
 		super(...props);
-		this.value = -25;
+		this.min = -5;
+		this.max = -25;
+		this.value = p5.floor(p5.random(this.min, this.max));
+		this.radius = p5.map(this.value, this.min, this.max, 2, 6);
 		this.color = globals.colors.poison;
 		this.type = 'poison';
 		this.force = 'bad';

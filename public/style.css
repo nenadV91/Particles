@@ -47,14 +47,14 @@ canvas {
 
 .widget-header {
 	background: rgba(41, 59, 71, 0.8);
-	padding: 5px 15px;
+	padding: 2px 15px;
 	cursor: drag;
 	cursor: move;
 }
 
 .widget-body {
-	background: rgba(21, 39, 63, 0.8);
-	padding: 15px;
+	background: rgba(21, 39, 63, 0.6);
+	padding: 5px 15px;
 }
 
 .list-item {
@@ -123,8 +123,8 @@ button:focus {
 .btn-control svg {
 	transition: all 0.2s ease-in;
 	cursor: pointer;
-	width: 25px;
-	height: 20px;
+	width: 15px;
+	height: 15px;
 	opacity: 0.5;
 }
 

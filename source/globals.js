@@ -1,8 +1,9 @@
 export const colors = {
 	particle: 'rgb(255, 255, 255)',
-	background: 'rgba(0, 0, 0, 1)',
-	food: 'rgba(49, 40, 228, 0.8)',
-	poison: 'rgba(197, 45, 40, 0.6)'
+	background: 'rgb(1, 0, 2)',
+	food: 'rgba(68, 255, 255, 0.8)',
+	poison: 'rgba(173, 68, 51, 0.9)',
+	stats: 'rgba(255, 255, 255, 0.4)'
 };
 
 export const rates = {
@@ -14,8 +15,8 @@ export const rates = {
 
 export const limits = {
 	force: 3,
-	maxForce: 0.8,
-	maxSpeed: 2.5,
+	maxForce: 0.6,
+	maxSpeed: 3,
 	particles: {
 		initial: 30,
 		total: 50

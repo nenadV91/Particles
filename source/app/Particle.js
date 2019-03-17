@@ -15,7 +15,7 @@ class Particle {
 		this.age = 0;
 		this.generation = 0;
 		this.health = 100;
-		this.healthLoss = 0.1;
+		this.healthLoss = 0.05;
 		this.points = 0;
 
 		if (dna) this.dna = dna;

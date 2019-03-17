@@ -1,7 +1,7 @@
 class DNA {
 	constructor() {
-		this.maxSpeed = p5.random(0.5, 1.5);
-		this.maxForce = p5.random(0.1, 0.6);
+		this.maxSpeed = p5.random(1, 2);
+		this.maxForce = p5.random(0.05, 0.4);
 		this.maxHealth = p5.random(100, 300);
 
 		this.forces = {

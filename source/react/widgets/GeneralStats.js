@@ -37,7 +37,8 @@ export default ({ particles, globals }) => {
 						<th>Gen</th>
 						<th>Speed</th>
 						<th>Points</th>
-						<th>Health</th>
+						<th>Hp</th>
+						<th>Hp loss</th>
 						<th>Stats</th>
 					</tr>
 				</thead>
@@ -48,28 +49,27 @@ export default ({ particles, globals }) => {
 					<HiddenHead />
 
 					<tbody>
-						{particles
-							.sort((a, b) => b.health - a.health)
-							.map((particle, index) => {
-								return (
-									<tr onClick={() => handleClick(particle)} key={particle.id}>
-										<td>{particle.id}</td>
-										<td>{particle.generation}</td>
-										<td>{particle.dna.maxSpeed.toFixed(1)}</td>
-										<td>{particle.points}</td>
-										<td>{particle.health.toFixed(0)}</td>
-										<td>
-											{particle.showStats ? (
-												<span>
-													<EyeIcon />
-												</span>
-											) : (
-												<span>-</span>
-											)}
-										</td>
-									</tr>
-								);
-							})}
+						{particles.map((particle, index) => {
+							return (
+								<tr onClick={() => handleClick(particle)} key={particle.id}>
+									<td>{particle.id}</td>
+									<td>{particle.generation}</td>
+									<td>{particle.dna.maxSpeed.toFixed(1)}</td>
+									<td>{particle.points}</td>
+									<td>{particle.health.toFixed(0)}</td>
+									<td>{particle.healthLoss.toFixed(2)}</td>
+									<td>
+										{particle.showStats ? (
+											<span>
+												<EyeIcon />
+											</span>
+										) : (
+											<span>-</span>
+										)}
+									</td>
+								</tr>
+							);
+						})}
 					</tbody>
 				</table>
 			</Scrollbars>

@@ -16,7 +16,10 @@ export default () => (
 				<span>Points</span>
 			</th>
 			<th>
-				<span>Health</span>
+				<span>Hp</span>
+			</th>
+			<th>
+				<span>Hp loss</span>
 			</th>
 			<th>
 				<span>Stats</span>

@@ -15,6 +15,9 @@ const app = p5 => {
 	p5.Vector = p5.constructor.Vector;
 	global.width = p5.windowWidth;
 	global.height = p5.windowHeight;
+	global.food = food;
+	global.poison = poison;
+	global.particles = particles;
 	global.globals = globals;
 	global.p5 = p5;
 
@@ -28,9 +31,7 @@ const app = p5 => {
 
 		class App extends React.Component {
 			state = {
-				particles: [],
-				poison: [],
-				food: []
+				particles: []
 			};
 
 			componentDidMount = () => {

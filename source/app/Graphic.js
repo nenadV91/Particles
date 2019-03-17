@@ -4,8 +4,8 @@ class Graphic {
 		const col = particle.color;
 
 		if (globals.display.particleForces) {
-			Graphic.particleForce(particle, 'good', p5.color(0, 255, 0));
-			Graphic.particleForce(particle, 'bad', p5.color(255, 0, 0));
+			Graphic.particleForce(particle, 'good', p5.color(globals.colors.food));
+			Graphic.particleForce(particle, 'bad', p5.color(globals.colors.poison));
 		}
 
 		p5.push();
@@ -37,14 +37,15 @@ class Graphic {
 		} = particle;
 
 		p5.noFill();
-		color.setAlpha(100);
+		p5.strokeWeight(2);
+		color.setAlpha(60);
 		p5.stroke(color);
 		p5.ellipse(x, y, forces[force], forces[force]);
 	}
 
 	static particleStats(particle) {
 		const stats = [];
-		const textColor = p5.color(255, 255, 255, 100);
+		const textColor = p5.color(globals.colors.stats);
 		const health = particle.health.toFixed(0);
 		const maxHealth = particle.dna.maxHealth.toFixed(0);
 		const healthLoss = particle.healthLoss.toFixed(2);
