@@ -3,7 +3,8 @@ export const colors = {
 	background: 'rgb(1, 0, 2)',
 	food: 'rgba(68, 255, 255, 0.8)',
 	poison: 'rgba(173, 68, 51, 0.9)',
-	stats: 'rgba(255, 255, 255, 0.4)'
+	stats: 'rgba(255, 255, 255, 0.4)',
+	area: 'rgba(64, 41, 133, 0.1)'
 };
 
 export const rates = {

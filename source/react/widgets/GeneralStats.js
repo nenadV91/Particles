@@ -18,7 +18,7 @@ export default ({ particles, globals }) => {
 				</ListItem>
 
 				<ListItem>
-					<span>Zoom: </span>
+					<span>Zoom level: </span>
 					<span>{globals.camera.view.zoom.toFixed(2)}</span>
 				</ListItem>
 
