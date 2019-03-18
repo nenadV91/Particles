@@ -1,6 +1,10 @@
 class Controls {
 	static move(controls) {
 		function mousePressed(e) {
+			if (e.target.className.includes('widget-header')) {
+				return false;
+			}
+
 			controls.viewPos.isDragging = true;
 			controls.viewPos.prevX = e.clientX;
 			controls.viewPos.prevY = e.clientY;

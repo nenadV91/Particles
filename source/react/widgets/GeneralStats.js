@@ -18,6 +18,11 @@ export default ({ particles, globals }) => {
 				</ListItem>
 
 				<ListItem>
+					<span>Zoom: </span>
+					<span>{globals.camera.view.zoom.toFixed(2)}</span>
+				</ListItem>
+
+				<ListItem>
 					<span>Particles total: </span>
 					<span>{globals.counter.particle}</span>
 				</ListItem>
