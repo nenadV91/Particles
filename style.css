@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css?family=Open+Sans:300,400');
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+	font-family: 'Open Sans', sans-serif;
+	font-weight: 400;
+	font-size: 12px;
+}
+
+#app,
+canvas {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+	top: 0;
+	left: 0;
+	bottom: 0;
+	right: 0;
+}
+
+canvas {
+	vertical-align: top;
+	z-index: 5;
+}
+
+.app-content {
+	display: flex;
+	flex-direction: column;
+	align-items: flex-start;
+	height: 100%;
+}
+
+.widget {
+	position: relative;
+	z-index: 10;
+	color: rgb(158, 165, 174);
+	border-radius: 5px;
+	overflow: hidden;
+	max-width: 400px;
+	margin-bottom: 10px;
+	width: 100%;
+}
+
+.widget-header {
+	background: rgba(41, 59, 71, 0.8);
+	padding: 2px 15px;
+	cursor: drag;
+	cursor: move;
+}
+
+.widget-body {
+	background: rgba(21, 39, 63, 0.6);
+	padding: 5px 15px;
+}
+
+.list-item {
+	margin-bottom: 5px;
+}
+
+.separator {
+	height: 1px;
+	background: rgba(255, 255, 255, 0.2);
+	margin: 10px 0;
+}
+
+table {
+	width: 100% !important;
+}
+
+th {
+	text-align: left;
+}
+
+td {
+	padding: 3px 0;
+}
+
+.hidden,
+.hidden tr,
+.hidden th {
+	opacity: 0;
+	height: 0;
+}
+
+.hidden span {
+	height: 0px;
+	display: block;
+	visibility: hidden;
+}
+
+.widget-table tr {
+	transition: all 0.25s ease-in;
+	cursor: pointer;
+}
+
+.widget-table tr:hover {
+	background: rgba(30, 71, 95, 0.6);
+}
+
+svg {
+	font-size: 16px;
+	width: 14px;
+}
+
+.btn-control {
+	background: none;
+	border: none;
+	box-shadow: none;
+	color: white;
+	font-size: 20px;
+}
+
+button:active,
+button:focus {
+	outline: none;
+	box-shadow: none;
+}
+
+.btn-control svg {
+	transition: all 0.2s ease-in;
+	cursor: pointer;
+	width: 15px;
+	height: 15px;
+	opacity: 0.5;
+}
+
+.btn-control:hover svg {
+	opacity: 0.6;
+}
+
+.btn-control.active svg {
+	opacity: 1;
+}
